@@ -3,13 +3,92 @@
 <head>
     <title>Edit Config</title>
     <style>
-        body { font-family: sans-serif; margin: 2em; }
-        .model-block { border: 1px solid #ddd; padding: 1em; margin-bottom: 1em; }
-        label { display: inline-block; width: 120px; }
-        input[type=text], input[type=number] { width: 300px; }
+        :root {
+            --bg-color: #1e1e1e;
+            --text-color: #f0f0f0;
+            --panel-bg: #2a2a2a;
+            --border-color: #444;
+            --input-bg: #333;
+            --button-bg: #007acc;
+            --button-bg-hover: #005f99;
+        }
+
+        body.light {
+            --bg-color: #f9f9f9;
+            --text-color: #222;
+            --panel-bg: #fff;
+            --border-color: #ccc;
+            --input-bg: #fff;
+            --button-bg: #007acc;
+            --button-bg-hover: #005f99;
+        }
+
+        body {
+            font-family: sans-serif;
+            margin: 2em;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .toggle-container {
+            position: fixed;
+            top: 1em;
+            right: 1em;
+        }
+
+        .model-block {
+            border: 1px solid var(--border-color);
+            padding: 1em;
+            margin-bottom: 1em;
+            background-color: var(--panel-bg);
+            border-radius: 8px;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        label {
+            display: inline-block;
+            width: 140px;
+            color: var(--text-color);
+        }
+
+        input[type=text],
+        input[type=number] {
+            width: 300px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 4px;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        input[type=checkbox] {
+            transform: scale(1.2);
+            margin-left: 4px;
+        }
+
+        button {
+            padding: 0.5em 1.2em;
+            border: none;
+            border-radius: 6px;
+            background-color: var(--button-bg);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--button-bg-hover);
+        }
     </style>
 </head>
 <body>
+    <div class="toggle-container">
+        <button type="button" onclick="toggleMode()">🌙/☀️</button>
+    </div>
+
     <h1>Edit Config</h1>
     <form action="/save" method="post">
         {% for model in config.models %}
@@ -31,5 +110,11 @@
         {% endfor %}
         <button type="submit">Save</button>
     </form>
+
+    <script>
+        function toggleMode() {
+            document.body.classList.toggle("light");
+        }
+    </script>
 </body>
 </html>

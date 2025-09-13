@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Config</title>
+    <style>
+        body { font-family: sans-serif; margin: 2em; }
+        .model-block { border: 1px solid #ddd; padding: 1em; margin-bottom: 1em; }
+        label { display: inline-block; width: 120px; }
+        input[type=text], input[type=number] { width: 300px; }
+    </style>
+</head>
+<body>
+    <h1>Edit Config</h1>
+    <form action="/save" method="post">
+        {% for model in config.models %}
+        <div class="model-block">
+            <h2>Model {{ loop.index }}</h2>
+            <p><label>Name:</label>
+               <input type="text" name="name_{{ loop.index0 }}" value="{{ model.name }}"></p>
+            <p><label>Path:</label>
+               <input type="text" name="path_{{ loop.index0 }}" value="{{ model.path }}"></p>
+            <p><label>GPU Layers:</label>
+               <input type="number" name="gpu_layers_{{ loop.index0 }}" value="{{ model.gpu_layers }}"></p>
+            <p><label>Context Size:</label>
+               <input type="number" name="context_size_{{ loop.index0 }}" value="{{ model.context_size }}"></p>
+            <p><label>Batch Size:</label>
+               <input type="number" name="batch_size_{{ loop.index0 }}" value="{{ model.batch_size }}"></p>
+            <p><label>Flash Attention:</label>
+               <input type="checkbox" name="flash_attention_{{ loop.index0 }}" {% if model.flash_attention %}checked{% endif %}></p>
+        </div>
+        {% endfor %}
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>
